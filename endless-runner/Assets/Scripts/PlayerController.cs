@@ -1,29 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
     private Rigidbody rb;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpForce = 8.0f;
     private bool canJump;
-
+    private bool canDown = true;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0) && canJump)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("Right mouse click");
+            if (canDown)
+            {
+                canDown = false;
+                canJump = false;
+                gameObject.transform.localScale = new Vector3(1.0f, 0.5f, 1.0f);
+            }
+            else
+            {
+                canDown = true;
+                canJump = true;
+                gameObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+
+
+        }
+
+
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Ground" && canDown)
+        {
+            canJump = true;
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            canJump = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Obstacle")
+        {
+            SceneManager.LoadScene("S_Game");
+        }
     }
 }
