@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 8.0f;
     private bool canJump;
     private bool canDown = true;
+    public float startTime = 0f;
+    public float holdTime = 2.0f;
 
     private void Awake()
     {
@@ -22,6 +24,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("It Works Great!");
+            startTime = Time.time;
+            if (startTime + holdTime >= Time.time)
+                Debug.Log(startTime);
+                Debug.Log(Time.time);
+                Debug.Log("It Works Great!");
+                startTime = 0;
+        }
+
+
         if (Input.GetMouseButtonDown(0) && canJump)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -42,11 +56,7 @@ public class PlayerController : MonoBehaviour
                 canJump = true;
                 gameObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
-
-
         }
-
-
     }
 
     void OnCollisionEnter(Collision other)

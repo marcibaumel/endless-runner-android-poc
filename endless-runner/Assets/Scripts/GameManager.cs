@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     int score = 0;
     public TextMeshProUGUI scoreText;
     public GameObject playButton;
+    //public GameObject infoButton;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         player.SetActive(true);
         scoreText.gameObject.SetActive(true);
         playButton.SetActive(false);
+        //infoButton.SetActive(false);
         StartCoroutine("SpawnObstacles");
         InvokeRepeating("ScoreUp", 2.0f, 1.0f);
     }
