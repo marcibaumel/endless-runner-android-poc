@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
+    
     [SerializeField] private float jumpForce = 8.0f;
     private bool canJump;
     private bool canDown = true;
