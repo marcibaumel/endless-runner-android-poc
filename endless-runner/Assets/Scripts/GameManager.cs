@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject obstacle;
-    public Transform spawnPoint;
+    public Transform[] spawnPoint = new Transform[2];
     int score = 0;
     public TextMeshProUGUI scoreText;
     public GameObject playButton;
@@ -45,10 +45,11 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
+            int randomNumber = Random.Range(0, spawnPoint.Length);
             float waitTime = Random.Range(0.8f, 2.0f);
             Debug.Log(waitTime);
             yield return new WaitForSeconds(waitTime);
-            Instantiate(obstacle, spawnPoint.position, Quaternion.identity);
+            Instantiate(obstacle, spawnPoint[randomNumber].position, Quaternion.identity);
         }
     }
 }
